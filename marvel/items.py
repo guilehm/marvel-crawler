@@ -82,3 +82,22 @@ class ComicItem(scrapy.Item):
     characters = scrapy.Field()
     stories = scrapy.Field()
     events = scrapy.Field()
+
+
+class StoriesItem(scrapy.Item):
+    _offset = scrapy.Field()
+    _limit = scrapy.Field()
+    _count = scrapy.Field()
+    id = scrapy.Field()
+    title = scrapy.Field()
+    description = scrapy.Field()
+    resourceURI = scrapy.Field()
+    type = scrapy.Field()
+    modified = scrapy.Field()
+    thumbnail = scrapy.Field()
+    creators = scrapy.Field()
+    characters = scrapy.Field()
+    series = scrapy.Field()
+    comics = scrapy.Field()
+    events = scrapy.Field()
+    originalIssue = scrapy.Field()
