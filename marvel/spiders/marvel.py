@@ -24,7 +24,10 @@ def get_start_urls(endpoint, total, limit=LIMIT):
 
 
 class BaseSpider(scrapy.Spider):
+    name = None
     item = None
+    known_quantity = None
+    start_urls = []
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -59,10 +62,7 @@ class BaseSpider(scrapy.Spider):
 
 
 class CharacterSpider(BaseSpider):
-    item = CharacterItem
-    KNOWN_QUANTITY_CHARACTERS = os.getenv('KNOWN_QUANTITY_CHARACTERS')
     name = 'characters'
-    start_urls = get_start_urls('characters', total=KNOWN_QUANTITY_CHARACTERS)
-
-
-        self.offset += self.count
+    item = CharacterItem
+    known_quantity = int(os.getenv('KNOWN_QUANTITY_CHARACTERS'))
+    start_urls = get_start_urls('characters', total=known_quantity)
