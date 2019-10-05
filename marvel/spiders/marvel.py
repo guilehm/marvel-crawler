@@ -26,14 +26,15 @@ class BaseSpider(scrapy.Spider):
     name = None
     item = None
     known_quantity = None
+    limit = LIMIT
     start_urls = []
     start = 0
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.item = self.item
+        self.limit = self.limit
         self.offset = 0
-        self.limit = LIMIT
         self.count = 0
 
     def get_full_url(self, url):
