@@ -18,7 +18,8 @@ def get_full_url(url):
 
 class CharacterSpider(scrapy.Spider):
     name = 'character'
-    start_urls = ['http://gateway.marvel.com/v1/public/characters']
+    urls = ['http://gateway.marvel.com/v1/public/characters']
+    start_urls = [get_full_url(url) for url in urls]
 
     def parse(self, response):
         pass
