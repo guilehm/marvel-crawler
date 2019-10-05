@@ -9,6 +9,9 @@ import scrapy
 
 
 class CharacterItem(scrapy.Item):
+    _offset = scrapy.Field()
+    _limit = scrapy.Field()
+    _count = scrapy.Field()
     id = scrapy.Field()
     name = scrapy.Field()
     description = scrapy.Field()

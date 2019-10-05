@@ -12,7 +12,7 @@ PUBLIC_KEY = os.getenv('PUBLIC_KEY')
 
 marvel = Marvel(PRIVATE_KEY, PUBLIC_KEY)
 
-LIMIT = 50
+LIMIT = 100
 BASE_URL = 'http://gateway.marvel.com/v1/public'
 
 
@@ -25,7 +25,7 @@ def get_start_urls(endpoint, total, limit=LIMIT):
 
 class CharacterSpider(scrapy.Spider):
     KNOWN_QUANTITY_CHARACTERS = os.getenv('KNOWN_QUANTITY_CHARACTERS', 1500)
-    name = 'character'
+    name = 'characters'
     start_urls = get_start_urls('characters', total=KNOWN_QUANTITY_CHARACTERS)
 
     def __init__(self, *args, **kwargs):
@@ -49,7 +49,12 @@ class CharacterSpider(scrapy.Spider):
 
         characters = data['results']
         for character in characters:
-            yield CharacterItem(**character)
+            self.count += 1
+            yield CharacterItem(
+                _offset=self.offset,
+                _limit=self.limit,
+                _count=self.count,
+                **character
+            )
 
         self.offset += self.count
-        self.count += count
