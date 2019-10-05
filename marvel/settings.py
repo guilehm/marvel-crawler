@@ -8,12 +8,17 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
 
 BOT_NAME = 'marvel'
 
 SPIDER_MODULES = ['marvel.spiders']
 NEWSPIDER_MODULE = 'marvel.spiders'
 
+PRIVATE_KEY = os.getenv('PRIVATE_KEY')
+PUBLIC_KEY = os.getenv('PUBLIC_KEY')
+LIMIT = min(int(os.getenv('LIMIT')), 100)
+BASE_URL = 'http://gateway.marvel.com/v1/public'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'marvel (+http://www.yourdomain.com)'

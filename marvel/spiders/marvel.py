@@ -6,12 +6,9 @@ from urllib.parse import urlencode
 import scrapy
 
 from marvel.items import CharacterItem, SeriesItem, ComicItem, StoriesItem, EventItem, CreatorItem
+from marvel.settings import PRIVATE_KEY, PUBLIC_KEY, LIMIT, BASE_URL
 from marvel.utils import Marvel
 
-PRIVATE_KEY = os.getenv('PRIVATE_KEY')
-PUBLIC_KEY = os.getenv('PUBLIC_KEY')
-LIMIT = min(int(os.getenv('LIMIT')), 100)
-BASE_URL = 'http://gateway.marvel.com/v1/public'
 MARVEL = Marvel(PRIVATE_KEY, PUBLIC_KEY)
 
 
