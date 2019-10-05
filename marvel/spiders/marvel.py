@@ -91,7 +91,7 @@ class EventSpider(BaseSpider):
     name = 'events'
     item = EventItem
     known_quantity = os.getenv('KNOWN_QUANTITY_EVENTS')
-    limit = min(LIMIT, 50)
+    limit = min(LIMIT, 25)
     start_urls = get_start_urls('events', start=0, stop=known_quantity, limit=limit)
 
 
@@ -99,5 +99,5 @@ class CreatorSpider(BaseSpider):
     name = 'creators'
     item = CreatorItem
     known_quantity = os.getenv('KNOWN_QUANTITY_CREATORS')
-    limit = min(LIMIT, 50)
+    limit = min(LIMIT, 25)
     start_urls = get_start_urls('creators', start=0, stop=known_quantity, limit=limit)
