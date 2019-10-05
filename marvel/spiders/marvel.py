@@ -2,7 +2,7 @@
 import json
 import os
 from urllib.parse import urlencode
-from marvel.items import CharacterItem, SeriesItem, ComicItem, StoriesItem
+from marvel.items import CharacterItem, SeriesItem, ComicItem, StoriesItem, EventItem
 import scrapy
 
 from marvel.utils import Marvel
@@ -86,3 +86,10 @@ class StoriesSpider(BaseSpider):
     item = StoriesItem
     known_quantity = os.getenv('KNOWN_QUANTITY_STORIES')
     start_urls = get_start_urls('stories', start=0, stop=known_quantity)
+
+
+class EventSpider(BaseSpider):
+    name = 'events'
+    item = EventItem
+    known_quantity = os.getenv('KNOWN_QUANTITY_EVENTS')
+    start_urls = get_start_urls('events', start=0, stop=known_quantity)
