@@ -8,7 +8,15 @@
 import scrapy
 
 
-class MarvelItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class CharacterItem(scrapy.Item):
+    id = scrapy.Field()
+    name = scrapy.Field()
+    description = scrapy.Field()
+    modified = scrapy.Field()
+    thumbnail = scrapy.Field()
+    resourceUri = scrapy.Field()
+    comics = scrapy.Field()
+    series = scrapy.Field()
+    histories = scrapy.Field()
+    events = scrapy.Field()
+    urls = scrapy.Field()
