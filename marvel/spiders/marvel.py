@@ -2,9 +2,10 @@
 import json
 import os
 from urllib.parse import urlencode
-from marvel.items import CharacterItem, SeriesItem, ComicItem, StoriesItem, EventItem, CreatorItem
+
 import scrapy
 
+from marvel.items import CharacterItem, SeriesItem, ComicItem, StoriesItem, EventItem, CreatorItem
 from marvel.utils import Marvel
 
 PRIVATE_KEY = os.getenv('PRIVATE_KEY')
