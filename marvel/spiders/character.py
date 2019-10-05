@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from urllib.parse import urlencode
 
 import scrapy
 
@@ -9,6 +10,10 @@ PRIVATE_KEY = os.getenv('PRIVATE_KEY')
 PUBLIC_KEY = os.getenv('PUBLIC_KEY')
 
 marvel = Marvel(PRIVATE_KEY, PUBLIC_KEY)
+
+
+def get_full_url(url):
+    return f'{url}?{urlencode(marvel.get_auth_data())}'
 
 
 class CharacterSpider(scrapy.Spider):
