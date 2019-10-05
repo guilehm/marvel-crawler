@@ -13,12 +13,16 @@ PUBLIC_KEY = os.getenv('PUBLIC_KEY')
 marvel = Marvel(PRIVATE_KEY, PUBLIC_KEY)
 
 LIMIT = 50
+KNOWN_QUANTITY = 1500
+BASE_URL = 'http://gateway.marvel.com/v1/public/characters'
 
 
 class CharacterSpider(scrapy.Spider):
     name = 'character'
-    url = 'http://gateway.marvel.com/v1/public/characters'
-    start_urls = [f'{url}?{urlencode(marvel.get_auth_data())}&limit={LIMIT}']
+    start_urls = [
+        f'{BASE_URL}?{urlencode(marvel.get_auth_data())}&limit={LIMIT}&offset={offset}'
+        for offset in range(0, KNOWN_QUANTITY + 1, LIMIT)
+    ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -45,6 +49,3 @@ class CharacterSpider(scrapy.Spider):
 
         self.offset += self.count
         self.count += count
-        next_url = self.get_full_url(self.url)
-
-        yield scrapy.Request(next_url, callback=self.parse)
