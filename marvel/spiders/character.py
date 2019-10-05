@@ -12,7 +12,7 @@ PUBLIC_KEY = os.getenv('PUBLIC_KEY')
 
 marvel = Marvel(PRIVATE_KEY, PUBLIC_KEY)
 
-LIMIT = 13
+LIMIT = 50
 
 
 class CharacterSpider(scrapy.Spider):
@@ -28,16 +28,23 @@ class CharacterSpider(scrapy.Spider):
 
     def get_full_url(self, url):
         auth_params = urlencode(marvel.get_auth_data())
-        extra_params = urlencode(dict(limit=self.limit))
-        return f'{url}?{auth_params}{extra_params}'
+        extra_params = urlencode(dict(limit=self.limit, offset=self.offset))
+        return f'{url}?{extra_params}&{auth_params}'
 
     def parse(self, response):
         json_response = json.loads(response.body_as_unicode())
         data = json_response.get('data', {})
+        count = data.get('count')
 
-        if not data.get('count'):
+        if not count:
             return
 
         characters = data['results']
         for character in characters:
             yield CharacterItem(**character)
+
+        self.offset += self.count
+        self.count += count
+        next_url = self.get_full_url(self.url)
+
+        yield scrapy.Request(next_url, callback=self.parse)
