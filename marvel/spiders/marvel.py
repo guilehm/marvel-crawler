@@ -23,13 +23,12 @@ def get_start_urls(endpoint, total, limit=LIMIT):
     ]
 
 
-class CharacterSpider(scrapy.Spider):
-    KNOWN_QUANTITY_CHARACTERS = os.getenv('KNOWN_QUANTITY_CHARACTERS', 1500)
-    name = 'characters'
-    start_urls = get_start_urls('characters', total=KNOWN_QUANTITY_CHARACTERS)
+class BaseSpider(scrapy.Spider):
+    item = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.item = self.item
         self.offset = 0
         self.limit = LIMIT
         self.count = 0
@@ -47,14 +46,23 @@ class CharacterSpider(scrapy.Spider):
         if not count:
             return
 
-        characters = data['results']
-        for character in characters:
+        items = data['results']
+        for item in items:
             self.count += 1
-            yield CharacterItem(
+            yield self.item(
                 _offset=self.offset,
                 _limit=self.limit,
                 _count=self.count,
-                **character
+                **item
             )
+        self.offset += self.count
+
+
+class CharacterSpider(BaseSpider):
+    item = CharacterItem
+    KNOWN_QUANTITY_CHARACTERS = os.getenv('KNOWN_QUANTITY_CHARACTERS')
+    name = 'characters'
+    start_urls = get_start_urls('characters', total=KNOWN_QUANTITY_CHARACTERS)
+
 
         self.offset += self.count
