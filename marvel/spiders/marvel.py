@@ -56,7 +56,7 @@ class BaseSpider(scrapy.Spider):
                 _count=self.count,
                 **item
             )
-        self.offset += self.count
+        self.offset += count
 
 
 class CharacterSpider(BaseSpider):
