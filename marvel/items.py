@@ -123,3 +123,23 @@ class EventItem(scrapy.Item):
     series = scrapy.Field()
     next = scrapy.Field()
     previous = scrapy.Field()
+
+
+class CreatorItem(scrapy.Item):
+    _offset = scrapy.Field()
+    _limit = scrapy.Field()
+    _count = scrapy.Field()
+    id = scrapy.Field()
+    firstName = scrapy.Field()
+    middleName = scrapy.Field()
+    lastName = scrapy.Field()
+    suffix = scrapy.Field()
+    fullName = scrapy.Field()
+    modified = scrapy.Field()
+    thumbnail = scrapy.Field()
+    resourceURI = scrapy.Field()
+    comics = scrapy.Field()
+    series = scrapy.Field()
+    stories = scrapy.Field()
+    events = scrapy.Field()
+    urls = scrapy.Field()
