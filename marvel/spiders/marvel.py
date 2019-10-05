@@ -9,7 +9,7 @@ from marvel.utils import Marvel
 
 PRIVATE_KEY = os.getenv('PRIVATE_KEY')
 PUBLIC_KEY = os.getenv('PUBLIC_KEY')
-LIMIT = 100
+LIMIT = min(int(os.getenv('LIMIT')), 100)
 BASE_URL = 'http://gateway.marvel.com/v1/public'
 MARVEL = Marvel(PRIVATE_KEY, PUBLIC_KEY)
 
@@ -92,4 +92,5 @@ class EventSpider(BaseSpider):
     name = 'events'
     item = EventItem
     known_quantity = os.getenv('KNOWN_QUANTITY_EVENTS')
-    start_urls = get_start_urls('events', start=0, stop=known_quantity)
+    limit = min(LIMIT, 50)
+    start_urls = get_start_urls('events', start=0, stop=known_quantity, limit=limit)
