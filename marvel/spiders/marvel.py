@@ -2,24 +2,22 @@
 import json
 import os
 from urllib.parse import urlencode
-from marvel.items import CharacterItem, SeriesItem
+from marvel.items import CharacterItem, SeriesItem, ComicItem
 import scrapy
 
 from marvel.utils import Marvel
 
 PRIVATE_KEY = os.getenv('PRIVATE_KEY')
 PUBLIC_KEY = os.getenv('PUBLIC_KEY')
-
-marvel = Marvel(PRIVATE_KEY, PUBLIC_KEY)
-
 LIMIT = 100
 BASE_URL = 'http://gateway.marvel.com/v1/public'
+MARVEL = Marvel(PRIVATE_KEY, PUBLIC_KEY)
 
 
 def get_start_urls(endpoint, stop, start=0, limit=LIMIT):
     return [
-        f'{BASE_URL}/{endpoint}?{urlencode(marvel.get_auth_data())}&limit={limit}&offset={offset}'
-        for offset in range(start, stop + 1, limit)
+        f'{BASE_URL}/{endpoint}?{urlencode(MARVEL.get_auth_data())}&limit={limit}&offset={offset}'
+        for offset in range(int(start), int(stop) + 1, limit)
     ]
 
 
@@ -38,7 +36,7 @@ class BaseSpider(scrapy.Spider):
         self.count = 0
 
     def get_full_url(self, url):
-        auth_params = urlencode(marvel.get_auth_data())
+        auth_params = urlencode(MARVEL.get_auth_data())
         extra_params = urlencode(dict(limit=self.limit, offset=self.offset))
         return f'{url}?{extra_params}&{auth_params}'
 
@@ -65,12 +63,19 @@ class BaseSpider(scrapy.Spider):
 class CharacterSpider(BaseSpider):
     name = 'characters'
     item = CharacterItem
-    known_quantity = int(os.getenv('KNOWN_QUANTITY_CHARACTERS'))
+    known_quantity = os.getenv('KNOWN_QUANTITY_CHARACTERS')
     start_urls = get_start_urls('characters', start=0, stop=known_quantity)
 
 
 class SeriesSpider(BaseSpider):
     name = 'series'
     item = SeriesItem
-    known_quantity = int(os.getenv('KNOWN_QUANTITY_SERIES'))
+    known_quantity = os.getenv('KNOWN_QUANTITY_SERIES')
     start_urls = get_start_urls('series', start=0, stop=known_quantity)
+
+
+class ComicSpider(BaseSpider):
+    name = 'comics'
+    item = ComicItem
+    known_quantity = os.getenv('KNOWN_QUANTITY_COMICS')
+    start_urls = get_start_urls('comics', start=0, stop=known_quantity)
