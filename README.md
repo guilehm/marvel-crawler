@@ -1,41 +1,40 @@
 # Marvel Crawler
 
-Baixe os todos os dados da API da Marvel para um banco de documentos com este projeto.
+Download all Marvel API data to a Mongodb with this project
 
 
 
-## Instalação
+## Installation
 
-Clone este repositório
+Clone this repository
 
     $ git clone git@github.com:Guilehm/marvel-crawler.git
 
-Entre no diretório
+Enter directory
 
     $ cd marvel-crawler
     
-Copie o arquivo `env.sample` para `.env`
+Copy the sample file `env.sample` to `.env`
 
     $ cp env.sample .env
     
-Utilize algum editor para alterar suas credenciais*
+Use some text editor to change your credentials*
 
     $ vim .env
     
-*<small>*para obter as credenciais se cadastre [aqui](https://developer.marvel.com/account).*</small>
+*<small>*to get the credentials sign-up [here](https://developer.marvel.com/account).*</small>
     
-### Instalação com Docker
+### Installation with Docker
 
-É necessário ter o Docker e o Docker-compose instalados em sua máquina.
-Recomendo este tutorial de instalação para o Linux [https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-docker-no-ubuntu-18-04-pt](https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-docker-no-ubuntu-18-04-pt)
+You must have Docker and Docker Compose installed on your machine
 
-Após ter concluído as etapas anteriores e estar com o serviço do Docker rodando, execute:
+After completing the previous steps and having the Docker service running, run:
 
     $ docker-compose build
 
-## Utilização
+## Use guide
 
-O spider está configurado para baixar informações dos seguintes endpoints:
+Spider is configured to download information from the following endpoints:
 - characters
 - series
 - comics
@@ -43,28 +42,38 @@ O spider está configurado para baixar informações dos seguintes endpoints:
 - events
 - creators
 
-Inicie os spiders com o seguinte comando:
+Start the spiders with the following command:
 
     $ docker-compose run crawler scrapy crawl characters
 
-Altere `characters` por um dos endpoints desejados acima.
+Change `characters` to one of the desired endpoints above.
 
-Os logs serão impressos no terminal e um relatório será gerado ao final das requests.
-Caso alguma request falhe, o Scrapy será responsável por tentar novamente e garantir que nenhuma informação seja perdida.
+Logs will be printed to the terminal and a report will be generated at the end of requests.
+Should any request fail, Scrapy will be responsible for retrying and ensuring that no information is lost.
 
-Os documentos serão salvos no mongodb em um banco chamado `marvelCrawler`.
-Para acessá-los, recomendo a utilização do *[Robo 3T](https://robomongo.org/download)*. 
-
-Configurei um delay de 2s para cada request e no máximo 5 requests em concorrência, para não sobrecarregar a API.
-
-Altere esses dados conforme desejar, mas tente não sobrecarregar o servidor.
+The documents will be saved to mongodb in a database called `marvelCrawler`.
+To access them, I recommend using [Robo 3T](https://robomongo.org/download). 
 
 
-## Recomendações
+I set a delay of 2s for each request and a maximum of 5 concurrent requests, so as not to overload the API.
 
-- Fique atento ao limite de 3000 requisições diárias.
-- Cada endpoint pode trazer até 100 resultados por paginação*
-- Os endpoints `events` e `creators` são muito pesados e tive resultados ruins acima de 25 itens por paginação, recomendo não alterar no código.
+Change this data as desired, but try not to overload the server.
 
-*<small>*Altere a quantidade de resultados por paginação no arquivo `.env` na variável `LIMIT`.*</small>
-*<small>*Por padrão estabeleci a quantidade de 50 itens, para ter uma performance boa.*</small>
+<strong>Be nice to the API.</strong>
+
+
+## Recommendations
+
+- Stay tuned to the limit of 3000 daily requests.
+- Each endpoint can bring up to 100 results per pagination *
+- The endpoints `events` and` creators` are very heavy and I had bad results over 25 items per pagination, I recommend not changing the code.
+
+*<small>* *Change the amount of pagination results in the `.env` file in the` LIMIT` variable.</small>
+*<small>By default I set 50 items for reasonable performance and not overloading the server.*</small>
+
+
+## Contribution
+If you want to contribute, just open an issue.
+Fork the repository and change whatever you'd like.
+
+Pull requests are always welcome.
