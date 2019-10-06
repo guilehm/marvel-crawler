@@ -68,7 +68,7 @@ Change this data as desired, but try not to overload the server.
 - Each endpoint can bring up to 100 results per pagination *
 - The endpoints `events` and` creators` are very heavy and I had bad results over 25 items per pagination, I recommend not changing the code.
 
-*<small>* *Change the amount of pagination results in the `.env` file in the` LIMIT` variable.</small>
+*<small>* *Change the amount of pagination results in the `.env` file in the `LIMIT` variable.</small>
 *<small>By default I set 50 items for reasonable performance and not overloading the server.*</small>
 
 
