@@ -9,7 +9,7 @@ import os
 
 from pymongo import MongoClient
 
-MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/stocksCrawler')
+MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/marvelCrawler')
 
 
 class MarvelPipeline(object):
