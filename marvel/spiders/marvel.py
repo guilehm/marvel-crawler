@@ -26,13 +26,8 @@ class BaseSpider(scrapy.Spider):
     limit = LIMIT
     start_urls = []
     start = 0
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.item = self.item
-        self.limit = self.limit
-        self.offset = 0
-        self.count = 0
+    offset = 0
+    count = 0
 
     def get_full_url(self, url):
         auth_params = urlencode(MARVEL.get_auth_data())
