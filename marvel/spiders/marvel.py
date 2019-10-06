@@ -94,5 +94,5 @@ class CreatorSpider(BaseSpider):
     name = 'creators'
     item = CreatorItem
     known_quantity = os.getenv('KNOWN_QUANTITY_CREATORS')
-    limit = min(LIMIT, 25)
+    limit = min(LIMIT, 15)
     start_urls = get_start_urls('creators', start=0, stop=known_quantity, limit=limit)
